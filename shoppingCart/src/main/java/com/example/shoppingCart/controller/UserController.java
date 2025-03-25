@@ -1,14 +1,12 @@
 package com.example.shoppingCart.controller;
 
-import com.example.shoppingCart.entity.Product;
-import com.example.shoppingCart.entity.User;
+import com.example.shoppingCart.model.ProductModel;
+import com.example.shoppingCart.model.UserModel;
 import com.example.shoppingCart.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -19,12 +17,15 @@ public class UserController {
     private UserService userService;
 
 
+    // Save Product
     @PostMapping("/addNewUser")
-    public ResponseEntity<User> addUser(@RequestBody User user) {
-        User savedUser = userService.addCustomer(user);
-        return new ResponseEntity<>(savedUser, HttpStatus.OK);
+    public ResponseEntity<UserModel> addUser(@RequestBody UserModel userModel) {
+        UserModel savedUserModel = userService.addCustomer(userModel);
+        return new ResponseEntity<>(savedUserModel, HttpStatus.OK);
     }
 
+
+    // Delete Product By Id
     @DeleteMapping("/deleteUser/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable Long id) {
         String response = userService.deleteUserById(id);
@@ -35,32 +36,31 @@ public class UserController {
         }
     }
 
+
+    // Update Product By Name
     @PutMapping("/updateUser/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
-        User updatedUserData = userService.updateUser(id, updatedUser);
-        if (updatedUserData != null) {
-            return new ResponseEntity<>(updatedUserData, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("User not found.", HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<UserModel> updateUser(@PathVariable Long id, @RequestBody UserModel updatedUserModel) {
+        UserModel updatedUser = userService.updateUser(id, updatedUserModel);
+        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
-
-    // Get Product By Name
-    @GetMapping("/getByName/{name}")
-    public List<Product> getByName(@PathVariable String name){
-        return userService.findProductByName(name);
-    }
 
     // Get Product By Category
     @GetMapping("/category")
-    public ResponseEntity<List<Product>> getByCategory(@RequestParam String category) {
-        List<Product> products = userService.findProductByCategory(category);
-
-        if (products.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.emptyList()); // Return 404 if no products found
-        }
-
+    public ResponseEntity<List<ProductModel>> getByCategory(@RequestParam String category) {
+        List<ProductModel> products = userService.findProductByCategory(category);
         return ResponseEntity.ok(products);
     }
 }
+
+
+
+
+
+
+
+//    @PostMapping("/addNewUser")
+//    public ResponseEntity<UserModel> addUser(@RequestBody UserModel userModel) {
+//        UserModel savedUserModel = userService.addCustomer(userModel);
+//        return new ResponseEntity<>(savedUserModel, HttpStatus.OK);
+//    }

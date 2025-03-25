@@ -1,13 +1,11 @@
 package com.example.shoppingCart.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -16,7 +14,8 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "user_id")
+    private Long userId;
 
     @Column(name = "first_name")
     private String firstName;
@@ -42,5 +41,10 @@ public class User {
     @Column(name = "date_of_birth", nullable = false)
     private LocalDate dob;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<UserRole> userRoles;
+
+    @OneToMany(mappedBy = "user")
+    private List<Cart> carts;
 
 }

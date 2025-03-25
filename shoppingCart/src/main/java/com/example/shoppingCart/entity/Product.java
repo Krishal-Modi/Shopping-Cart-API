@@ -1,8 +1,9 @@
 package com.example.shoppingCart.entity;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
+
 import com.example.shoppingCart.enums.ProductCategory;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.Data;
 
 @Entity
@@ -12,7 +13,8 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "product_id")
+    private Long productId;
 
     @Column(name = "product_name", nullable = false)
     private String productName;
@@ -27,9 +29,9 @@ public class Product {
     @Column(name = "product_price", nullable = false)
     private Long productPrice;
 
-
     @Column(name = "product_rating")
     @Min(value=0)
     @Max(value=5)
     private float productRating;
+
 }
