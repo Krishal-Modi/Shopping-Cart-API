@@ -3,6 +3,7 @@ package com.example.shoppingCart.controller;
 import com.example.shoppingCart.mapper.CartMapper;
 import com.example.shoppingCart.model.CartModel;
 import com.example.shoppingCart.service.CartService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@Tag(name = "Cart", description = "Shopping Cart Operations")
 @RequestMapping("/cart")
 public class CartController {
 

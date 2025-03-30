@@ -5,6 +5,7 @@ import com.example.shoppingCart.model.ProductModel;
 import com.example.shoppingCart.model.UserModel;
 import com.example.shoppingCart.service.AdminService;
 import com.example.shoppingCart.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import java.util.Collections;
 import java.util.List;
 
 @RestController
+@Tag(name = "Admin", description = "Shopping Cart Operations")
 @RequestMapping("/admin")
 public class AdminController {
 

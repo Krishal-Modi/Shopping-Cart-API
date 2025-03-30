@@ -6,6 +6,8 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity
 @Data
 @Table(name = "products")
@@ -33,5 +35,8 @@ public class Product {
     @Min(value=0)
     @Max(value=5)
     private float productRating;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Cart> cart;
 
 }

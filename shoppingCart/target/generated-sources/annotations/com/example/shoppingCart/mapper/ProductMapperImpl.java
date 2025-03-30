@@ -2,12 +2,14 @@ package com.example.shoppingCart.mapper;
 
 import com.example.shoppingCart.entity.Product;
 import com.example.shoppingCart.model.ProductModel;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-03-25T19:37:01+0530",
+    date = "2025-03-29T21:59:38+0530",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 23.0.1 (Oracle Corporation)"
 )
 @Component
@@ -63,5 +65,19 @@ public class ProductMapperImpl implements ProductMapper {
         product.setProductRating( productModel.getProductRating() );
 
         return product;
+    }
+
+    @Override
+    public List<ProductModel> productListToProductModelList(List<Product> productList) {
+        if ( productList == null ) {
+            return null;
+        }
+
+        List<ProductModel> list = new ArrayList<ProductModel>( productList.size() );
+        for ( Product product : productList ) {
+            list.add( productToProductModel( product ) );
+        }
+
+        return list;
     }
 }

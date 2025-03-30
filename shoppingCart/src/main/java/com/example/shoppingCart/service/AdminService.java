@@ -30,7 +30,7 @@ public class AdminService {
     public List<UserModel> getUsers(String search) {
         // Filter by parameter
         List<User> usersList = userRepository.searchUsers(search);
-
+//        List<UserModel> userModelList = userMapper.userListToUserModelList(usersList);
         List<UserModel> userModelList = usersList.stream().map(user -> {
             UserModel userModel = userMapper.userToUserModel(user);
             List<UserRole> userRoles = userRoleRepository.findByUserUserId(user.getUserId());

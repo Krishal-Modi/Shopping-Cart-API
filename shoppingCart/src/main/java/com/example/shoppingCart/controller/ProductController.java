@@ -2,6 +2,7 @@ package com.example.shoppingCart.controller;
 
 import com.example.shoppingCart.model.ProductModel;
 import com.example.shoppingCart.service.ProductService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@Tag(name = "Product", description = "Shopping Cart Operations")
 @RequestMapping("/shopkeeper")
 public class ProductController {
 
@@ -43,29 +45,14 @@ public class ProductController {
     }
 
 
-    // Get Product By Name
-    @GetMapping("/getByName/{name}")
-    public ResponseEntity<List<ProductModel>> getByName(@PathVariable String name){
-        List<ProductModel> products = productService.findProductByName(name);
-        return ResponseEntity.ok(products);
-    }
-
-
-    @GetMapping("/category")
-    public ResponseEntity<List<ProductModel>> getByCategory(@RequestParam String category) {
-        List<ProductModel> products = productService.findProductByCategory(category);
-        return ResponseEntity.ok(products);
-    }
-
-
     // Delete Product By ID
     @DeleteMapping("/deleteById/{id}")
     public ResponseEntity<String> deleteById(@PathVariable Long id) {
         boolean product = productService.deleteProductById(id);
         if (product) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.ok("Product deleted successfully");
         }
-        return ResponseEntity.ok("Product deleted successfully");
+        return ResponseEntity.notFound().build();
     }
 
 
@@ -75,4 +62,42 @@ public class ProductController {
         return ResponseEntity.ok(productService.updateProduct(id, productModel));
     }
 
+
+    @GetMapping("/search")
+    public List<ProductModel> searchProducts(@RequestParam(required = false) String search) {
+        return productService.searchProducts(search);
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+// Get Product By Name
+@GetMapping("/getByName/{name}")
+public ResponseEntity<List<ProductModel>> getByName(@PathVariable String name){
+    List<ProductModel> products = productService.findProductByName(name);
+    return ResponseEntity.ok(products);
+}
+
+
+@GetMapping("/category")
+public ResponseEntity<List<ProductModel>> getByCategory(@RequestParam String category) {
+    List<ProductModel> products = productService.findProductByCategory(category);
+    return ResponseEntity.ok(products);
+}*/

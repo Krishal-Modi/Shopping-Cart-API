@@ -58,7 +58,7 @@ public class UserService {
         List<Long> roleIdsFromModel = userModel.getRoles().stream().map(r -> r.getRoleId()).toList();
 
         // Finding all matching Roles From DB
-        List<Role> roleInDb = roleRepository.findAllByRoleIdIn(roleIdsFromModel); // In is used for finding the roles inside the DB
+        List<Role> roleInDb = roleRepository.findAllByRoleIdIn(roleIdsFromModel); // It is used for finding the roles inside the DB
 
         // Extract Roles Id that exists in Database
         List<Long> roleIdsInDb = roleInDb.stream().map(r -> r.getRoleId()).toList();
@@ -145,7 +145,6 @@ public class UserService {
                 removeRoleIds.add(roleId);
             }
         }
-        /*List<UserRole> deletedRoles = userRoleRepository.findByRoleRoleIdInAndUserUserId(removeRoleIds, id);*/
 
         if(!removeRoleIds.isEmpty()){
             userRoleRepository.deleteByRoleRoleIdInAndUserUserId(removeRoleIds, id);
@@ -233,5 +232,13 @@ public class UserService {
         }
         return bestMatch;
     }
+
+    public List<ProductModel> searchProducts(String search) {
+
+        List<Product> products = productRepository.searchProducts(search);
+
+        return productMapper.productListToProductModelList(products);
+    }
+
 
 }
